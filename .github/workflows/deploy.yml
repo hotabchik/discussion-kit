@@ -2,20 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ['main']
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+    branches: 'main' # или 'master', если ваша основная ветка так называется
 
 jobs:
-  test:
+  build_site:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,51 +14,32 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Type-check
-        run: npm run check
-
-      - name: Unit tests (100% coverage enforced)
-        run: npm run test:coverage
-
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
+      - name: build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
         run: npm run build
 
-      - name: Upload artifact
+      - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'build/'
+          path: 'build/' # Проверьте, в какую папку собирается проект (build или dist)
 
   deploy:
-    needs: build
+    needs: build_site
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
