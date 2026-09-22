@@ -17,21 +17,24 @@ import { defineForumConfig } from './src/lib/config/schema';
  */
 export default defineForumConfig({
 	site: {
-		name: 'Discussion Kit',
-		description: 'A community forum powered by GitHub Discussions',
-		// logo: '💬',                        // emoji shown instead of the default icon
-		footer: 'Powered by GitHub Discussions'
+		name: 'Форум NobarskRP',
+		description: 'Официальный форум Нобарска',
+		logo: '📗',                        // emoji shown instead of the default icon
+		footer: '© 2025 NobarskRP. Все права защищены.'
 	},
 
 	repo: {
 		// Omit owner/name to auto-detect when building in GitHub Actions.
-		owner: 'NotReeceHarris',
+		owner: 'hotabchik',
 		name: 'discussion-kit'
 	},
 
 	// Extra header links
 	nav: [
-		// { label: 'Docs', href: 'https://example.com/docs', external: true }
+	{ label: 'Правила', href: '' },
+    { label: 'Донат', href: '', external: true },
+    { label: 'Discord', href: 'https://discord.gg/qCtG3zvagm', external: true },
+    { label: 'Игровой сервер', href: '', external: true }
 	],
 
 	auth: {
@@ -44,14 +47,22 @@ export default defineForumConfig({
 	},
 
 	admins: {
-		logins: ['NotReeceHarris'], // GitHub logins that get the admin badge
-		badgeLabel: 'Admin'  // label shown next to admin usernames
+		logins: ['hotabchik'], // GitHub logins that get the admin badge
+		badgeLabel: 'Руководство'  // label shown next to admin usernames
 	},
 
 	// Custom badges shown next to usernames: label → GitHub logins
 	badges: {
-		'Moderator': ['NotDevenBriers'],
-		// 'Contributor': ['someuser', 'anotheruser']
+    'Гл. Администратор': ['', ''],
+    'Заместитель Гл.Администратора': ['', '', ''],
+	'Главный Куратор Гос.Структур': ['', '', ''],
+	'Помощник ГК.Гос.Структур': ['', '', ''],
+	'Главный Куратор Крайм.Структур': ['', '', ''],
+	'Помощник ГК.Крайм.Структур': ['', '', ''],
+    'Администратор Форума':         ['', ''],
+    'Администратор':    [''],
+    'Тестировщик':       ['', '']
+		
 	},
 
 	content: {
